@@ -1,3 +1,2 @@
-## [0.0.1] - TODO: Add release date.
-
-* TODO: Describe initial release.
+<!--  Date Format DD/MM/YYYY -->
+## [0.0.1] - First release (05/06/2021)
