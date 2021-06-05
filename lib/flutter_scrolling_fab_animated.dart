@@ -5,7 +5,7 @@ import 'package:flutter/rendering.dart';
 
 /// Widget to animate the button when scroll down
 class ScrollingFabAnimated extends StatefulWidget {
-  /// Function to use when on press the button
+  /// Function to use when press the button
   final Function onPress;
 
   /// Double value to set the button elevation
@@ -29,7 +29,7 @@ class ScrollingFabAnimated extends StatefulWidget {
   /// Value to set the curve for animation
   final Curve curve;
 
-  /// ScrollController to use
+  /// ScrollController to use to determine when user is on top or not
   final ScrollController scrollController;
 
   /// Double value to set the boundary value when scroll animation is triggered

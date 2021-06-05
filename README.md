@@ -1,14 +1,73 @@
-# flutter_scrolling_fab_animated
+# Flutter Scrolling Fab Animated
 
-A new Flutter package project.
+This package is a floating button whose change of size when scroll down and return to its original size when on top again. It's useful with list and other scrollable widgets.
 
-## Getting Started
+<img src="https://raw.githubusercontent.com/ajomuch92/flutter-scrolling-fab-animated/master/assets/demo.gif" width="200" height="429"/>
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+## Instalation
+Include `flutter_scrolling_fab_animated` in your `pubspec.yaml` file:
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_scrolling_fab_animated: version
+```
+
+## Usage
+
+To use this package, just import it into your file and enjoy it.
+
+```dart
+import 'package:bottom_sheet_expandable_bar/bottom_sheet_bar_icon.dart';
+import 'package:flutter_scrolling_fab_animated/flutter_scrolling_fab_animated.dart';
+
+...
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Flutter Scrolling Fab Animated Demo'),
+      ),
+      body: Container(
+        child: new ListView.builder(
+          controller: _scrollController,
+          itemCount: items.length,
+          itemBuilder: (BuildContext ctxt, int index) {
+            return new Card(
+              child: ListTile(
+                title: Text(items[index]),
+              )
+            );
+          }
+        ),
+      ),
+      floatingActionButton: ScrollingFabAnimated(
+        icon: Icon(Icons.add, color: Colors.white,),
+        text: Text('Add', style: TextStyle(color: Colors.white, fontSize: 16.0),),
+        onPress: (){},
+        scrollController: _scrollController,
+      )
+    );
+  }
+
+...
+
+```
+
+### Properties
+
+|  Name | Description   | Required   | Default   |
+| ------------ | ------------ | ------------ | ------------ |
+| icon  | Widget to use as button icon | True   |   |
+| text  | Widget to use as button text when button is expanded |  True  |   |
+| onPress  | Function to use when press the button | True   |  |
+| scrollController  | ScrollController to use to determine when user is on top or not | True   |   |
+| elevation  | Double value to set the button elevation | False   |  5.0 |
+| width  | Double value to set the button width when is expanded | False   | 120.0  |
+| height  | Double value to set the button height | False   |  60.0 |
+| duration  | Value to set the duration for animation | False   |  250 milliseconds |
+| curve  | Value to set the curve for animation | False   | Curves.easeInOut|
+| limitIndicator  | Double value to set the boundary value when scroll animation is triggered | False   | 10.0 |
+| color  | Color to set the button background color | False   | Colors.blueAccent  |
