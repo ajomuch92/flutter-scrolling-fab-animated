@@ -56,6 +56,46 @@ import 'package:flutter_scrolling_fab_animated/flutter_scrolling_fab_animated.da
 
 ```
 
+Example with a GridView
+
+```dart
+import 'package:bottom_sheet_expandable_bar/bottom_sheet_bar_icon.dart';
+import 'package:flutter_scrolling_fab_animated/flutter_scrolling_fab_animated.dart';
+
+...
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Flutter Scrolling Fab Animated Demo'),
+      ),
+      body: Container(
+        child: new GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+          controller: _scrollController,
+          itemCount: items.length,
+          itemBuilder: (BuildContext ctxt, int index) {
+            return new Card(
+              child: ListTile(
+                title: Center(child: Text(items[index])),
+              )
+            );
+          }),
+      ),
+      floatingActionButton: ScrollingFabAnimated(
+        icon: Icon(Icons.add, color: Colors.white,),
+        text: Text('Add', style: TextStyle(color: Colors.white, fontSize: 16.0),),
+        onPress: (){},
+        scrollController: _scrollController,
+      )
+    );
+  }
+
+...
+
+```
+
 ### Properties
 
 |  Name | Description   | Required   | Default   |
