@@ -29,7 +29,7 @@ class ScrollingFabAnimated extends StatefulWidget {
   /// Value to set the curve for animation
   final Curve curve;
 
-  /// ScrollController to use 
+  /// ScrollController to use
   final ScrollController scrollController;
 
   /// Double value to set the boundary value when scroll animation is triggered
@@ -38,20 +38,20 @@ class ScrollingFabAnimated extends StatefulWidget {
   /// Color to set the button background color
   final Color color;
 
-  ScrollingFabAnimated({Key key,
-    @required this.icon,
-    @required this.text,
-    @required this.onPress,
-    @required this.scrollController,
-    this.elevation = 5.0,
-    this.width = 120.0,
-    this.height = 60.0,
-    this.duration = const Duration(milliseconds: 250),
-    this.curve,
-    this.limitIndicator = 10.0,
-    this.color = Colors.blueAccent
-  }) 
-    : super(key: key);
+  ScrollingFabAnimated(
+      {Key key,
+      @required this.icon,
+      @required this.text,
+      @required this.onPress,
+      @required this.scrollController,
+      this.elevation = 5.0,
+      this.width = 120.0,
+      this.height = 60.0,
+      this.duration = const Duration(milliseconds: 250),
+      this.curve,
+      this.limitIndicator = 10.0,
+      this.color = Colors.blueAccent})
+      : super(key: key);
 
   @override
   _ScrollingFabAnimatedState createState() => _ScrollingFabAnimatedState();
@@ -77,13 +77,15 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated> {
     ScrollController _scrollController = widget.scrollController;
     _scrollController.addListener(() {
       print(_scrollController.position.userScrollDirection);
-      if(_scrollController.position.pixels > widget.limitIndicator && _scrollController.position.userScrollDirection ==
-          ScrollDirection.reverse) {
+      if (_scrollController.position.pixels > widget.limitIndicator &&
+          _scrollController.position.userScrollDirection ==
+              ScrollDirection.reverse) {
         setState(() {
           _onTop = false;
         });
-      } else if (_scrollController.position.pixels <= widget.limitIndicator && _scrollController.position.userScrollDirection ==
-          ScrollDirection.forward) {
+      } else if (_scrollController.position.pixels <= widget.limitIndicator &&
+          _scrollController.position.userScrollDirection ==
+              ScrollDirection.forward) {
         print(_scrollController.position.pixels);
         setState(() {
           _onTop = true;
@@ -102,23 +104,20 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated> {
           borderRadius: BorderRadius.all(Radius.circular(widget.height / 2)),
         ),
         child: AnimatedContainer(
-          curve: widget.curve??Curves.easeInOut,
+          curve: widget.curve ?? Curves.easeInOut,
           duration: widget.duration,
           height: widget.height,
-          width: _onTop? widget.width: widget.height,
+          width: _onTop ? widget.width : widget.height,
           decoration: BoxDecoration(
-            color: widget.color,
-            borderRadius: BorderRadius.all(Radius.circular(widget.height / 2))
-          ),
-          child: _onTop? 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                widget.icon,
-                widget.text
-              ],
-            ): 
-            widget.icon,
+              color: widget.color,
+              borderRadius:
+                  BorderRadius.all(Radius.circular(widget.height / 2))),
+          child: _onTop
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [widget.icon, widget.text],
+                )
+              : widget.icon,
         ),
       ),
     );
