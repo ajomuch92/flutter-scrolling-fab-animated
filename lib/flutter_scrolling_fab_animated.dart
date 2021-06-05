@@ -46,7 +46,7 @@ class ScrollingFabAnimated extends StatefulWidget {
     this.elevation = 5.0,
     this.width = 120.0,
     this.height = 60.0,
-    this.duration = const Duration(milliseconds: 500),
+    this.duration = const Duration(milliseconds: 250),
     this.curve,
     this.limitIndicator = 10.0,
     this.color = Colors.blueAccent
