@@ -1,10 +1,10 @@
 name: flutter_scrolling_fab_animated
 description: Package to add a floating button whose change of size when scroll down
-version: 0.0.1
+version: 0.1.0
 homepage: https://github.com/ajomuch92/flutter-scrolling-fab-animated
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
