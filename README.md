@@ -1,6 +1,6 @@
 # Flutter Scrolling Fab Animated
 
-This package is a floating button whose change of size when scroll down and return to its original size when on top again. It's useful with list and other scrollable widgets.
+This package is a floating button whose change of size when scroll down and return to its original size when on top again. It's useful with ListView widget and other scrollable widgets.
 
 <img src="https://raw.githubusercontent.com/ajomuch92/flutter-scrolling-fab-animated/master/assets/demo.gif" width="200" height="429"/>
 
