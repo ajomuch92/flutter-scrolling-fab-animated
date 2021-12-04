@@ -66,6 +66,7 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated>
     with SingleTickerProviderStateMixin {
   /// Boolean value to indicate when scroll view is on top
   bool _onTop = true;
+
   /// Value to indicate when to show the child widget
   bool _visibleText = false;
 

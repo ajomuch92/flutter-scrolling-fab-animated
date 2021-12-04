@@ -52,32 +52,35 @@ class _HomeState extends State<Home> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Flutter Scrolling Fab Animated Demo'),
-      ),
-      body: Container(
-        child: new ListView.builder(
-          controller: _scrollController,
-          itemCount: items.length,
-          itemBuilder: (BuildContext ctxt, int index) {
-            return new Card(
-              child: ListTile(
-                title: Text(items[index]),
-              )
-            );
-          }),
-      ),
-      floatingActionButton: ScrollingFabAnimated(
-        icon: Icon(Icons.add, color: Colors.white,),
-        text: Text('Add', style: TextStyle(color: Colors.white, fontSize: 16.0),),
-        onPress: (){},
-        scrollController: _scrollController,
-        animateIcon: true,
-      )
-    );
+        appBar: AppBar(
+          title: Text('Flutter Scrolling Fab Animated Demo'),
+        ),
+        body: Container(
+          child: new ListView.builder(
+              controller: _scrollController,
+              itemCount: items.length,
+              itemBuilder: (BuildContext ctxt, int index) {
+                return new Card(
+                    child: ListTile(
+                  title: Text(items[index]),
+                ));
+              }),
+        ),
+        floatingActionButton: ScrollingFabAnimated(
+          icon: Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+          text: Text(
+            'Add',
+            style: TextStyle(color: Colors.white, fontSize: 16.0),
+          ),
+          onPress: () {},
+          scrollController: _scrollController,
+          animateIcon: true,
+        ));
   }
 }
