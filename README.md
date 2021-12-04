@@ -4,6 +4,13 @@ This package is a floating button whose change of size when scroll down and retu
 
 <img src="https://raw.githubusercontent.com/ajomuch92/flutter-scrolling-fab-animated/master/assets/demo.gif" width="200" height="429"/>
 
+With animated icon
+
+<img src="https://raw.githubusercontent.com/ajomuch92/flutter-scrolling-fab-animated/master/assets/demo2.gif" width="200" height="429"/>
+
+## New Features 💥
+* Adding prop to animate the icon.
+
 ## Instalation
 Include `flutter_scrolling_fab_animated` in your `pubspec.yaml` file:
 
@@ -48,6 +55,7 @@ import 'package:flutter_scrolling_fab_animated/flutter_scrolling_fab_animated.da
         text: Text('Add', style: TextStyle(color: Colors.white, fontSize: 16.0),),
         onPress: (){},
         scrollController: _scrollController,
+        animateIcon: true,
       )
     );
   }
@@ -88,6 +96,7 @@ import 'package:flutter_scrolling_fab_animated/flutter_scrolling_fab_animated.da
         text: Text('Add', style: TextStyle(color: Colors.white, fontSize: 16.0),),
         onPress: (){},
         scrollController: _scrollController,
+        animateIcon: true,
       )
     );
   }
@@ -111,3 +120,4 @@ import 'package:flutter_scrolling_fab_animated/flutter_scrolling_fab_animated.da
 | curve  | Value to set the curve for animation | False   | Curves.easeInOut|
 | limitIndicator  | Double value to set the boundary value when scroll animation is triggered | False   | 10.0 |
 | color  | Color to set the button background color | False   | Colors.blueAccent  |
+| animateIcon | Value to indicate if animate or not the icon | False   | true  |
