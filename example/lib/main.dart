@@ -76,6 +76,7 @@ class _HomeState extends State<Home> {
         text: Text('Add', style: TextStyle(color: Colors.white, fontSize: 16.0),),
         onPress: (){},
         scrollController: _scrollController,
+        animateIcon: true,
       )
     );
   }
