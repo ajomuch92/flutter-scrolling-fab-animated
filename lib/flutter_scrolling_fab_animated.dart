@@ -42,7 +42,7 @@ class ScrollingFabAnimated extends StatefulWidget {
   /// Value to indicate if animate or not the icon
   final bool? animateIcon;
 
-  ScrollingFabAnimated(
+  const ScrollingFabAnimated(
       {Key? key,
       required this.icon,
       required this.text,
@@ -71,21 +71,18 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated>
   bool _visibleText = false;
 
   /// Controller for icon animation
-  AnimationController? _animationController;
-
-  _ScrollingFabAnimatedState() {
-    _animationController = new AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 250),
-      reverseDuration: Duration(milliseconds: 250),
-      animationBehavior: AnimationBehavior.normal,
-      lowerBound: 0,
-      upperBound: 120,
-    );
-  }
+  late AnimationController _animationController;
 
   @override
   void initState() {
+    _animationController = AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 250),
+        reverseDuration: const Duration(milliseconds: 250),
+        animationBehavior: AnimationBehavior.normal,
+        lowerBound: 0,
+        upperBound: 120);
+
     super.initState();
     _handleScroll();
   }
@@ -93,7 +90,7 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated>
   @override
   void dispose() {
     widget.scrollController!.removeListener(() {});
-    _animationController!.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -105,14 +102,14 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated>
       if (_scrollController.position.pixels > widget.limitIndicator! &&
           _scrollController.position.userScrollDirection ==
               ScrollDirection.reverse) {
-        if (widget.animateIcon!) _animationController!.forward();
+        if (widget.animateIcon!) _animationController.forward();
         setState(() {
           _onTop = false;
         });
       } else if (_scrollController.position.pixels <= widget.limitIndicator! &&
           _scrollController.position.userScrollDirection ==
               ScrollDirection.forward) {
-        if (widget.animateIcon!) _animationController!.reverse();
+        if (widget.animateIcon!) _animationController.reverse();
         setState(() {
           _onTop = true;
         });
@@ -122,51 +119,62 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated>
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: widget.onPress,
-      child: Card(
-        elevation: widget.elevation,
-        shape: RoundedRectangleBorder(
+    return Card(
+      elevation: widget.elevation,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(widget.height! / 2))),
+      child: AnimatedContainer(
+        curve: widget.curve ?? Curves.easeInOut,
+        duration: widget.duration!,
+        height: widget.height,
+        width: _onTop ? widget.width : widget.height,
+        onEnd: () {
+          setState(() {
+            _visibleText = !_visibleText;
+          });
+        },
+        decoration: BoxDecoration(
+            borderRadius:
+                BorderRadius.all(Radius.circular(widget.height! / 2))),
+        child: InkWell(
           borderRadius: BorderRadius.all(Radius.circular(widget.height! / 2)),
-        ),
-        child: AnimatedContainer(
-          curve: widget.curve ?? Curves.easeInOut,
-          duration: widget.duration!,
-          height: widget.height,
-          width: _onTop ? widget.width : widget.height,
-          onEnd: () {
-            setState(() {
-              _visibleText = !_visibleText;
-            });
-          },
-          decoration: BoxDecoration(
-              color: widget.color,
-              borderRadius:
-                  BorderRadius.all(Radius.circular(widget.height! / 2))),
-          child: Row(
-            mainAxisAlignment: _onTop
-                ? MainAxisAlignment.spaceEvenly
-                : MainAxisAlignment.center,
-            children: [
-              AnimatedBuilder(
-                  child: widget.icon!,
-                  animation: _animationController!,
-                  builder: (BuildContext context, Widget? _widget) {
-                    return new Transform.rotate(
-                      angle: (_animationController!.value * 3 * math.pi) / 180,
-                      child: _widget!,
-                    );
-                  }),
-              ...(_onTop
-                  ? [
-                      AnimatedOpacity(
-                        opacity: !_visibleText ? 1 : 0,
-                        duration: Duration(milliseconds: 100),
-                        child: widget.text!,
-                      )
-                    ]
-                  : []),
-            ],
+          onTap: widget.onPress,
+          child: Ink(
+            decoration: BoxDecoration(
+                borderRadius:
+                    BorderRadius.all(Radius.circular(widget.height! / 2)),
+                color: widget.color),
+            child: Row(
+              mainAxisAlignment: _onTop
+                  ? MainAxisAlignment.spaceEvenly
+                  : MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: AnimatedBuilder(
+                      child: widget.icon!,
+                      animation: _animationController,
+                      builder: (BuildContext context, Widget? _widget) {
+                        return Transform.rotate(
+                          angle:
+                              (_animationController.value * 3 * math.pi) / 180,
+                          child: _widget!,
+                        );
+                      }),
+                ),
+                ...(_onTop
+                    ? [
+                        Expanded(
+                          child: AnimatedOpacity(
+                            opacity: !_visibleText ? 1 : 0,
+                            duration: const Duration(milliseconds: 100),
+                            child: widget.text!,
+                          ),
+                        )
+                      ]
+                    : []),
+              ],
+            ),
           ),
         ),
       ),
