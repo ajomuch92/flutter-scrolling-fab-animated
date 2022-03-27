@@ -54,7 +54,7 @@ class ScrollingFabAnimated extends StatefulWidget {
       this.duration = const Duration(milliseconds: 250),
       this.curve,
       this.limitIndicator = 10.0,
-      this.color = Colors.blueAccent,
+      this.color,
       this.animateIcon = true})
       : super(key: key);
 
@@ -113,15 +113,15 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated> {
             bool _isFull = _endTween == 100;
             print((3.6 * math.pi / 180) * size);
             return Container(
+              decoration: BoxDecoration(
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(widget.height! / 2)),
+                  color: widget.color ?? Theme.of(context).primaryColor),
               height: widget.height,
               width: widget.height! + _widthPercent * size,
               child: InkWell(
                 onTap: widget.onPress,
                 child: Ink(
-                  decoration: BoxDecoration(
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(widget.height! / 2)),
-                      color: widget.color),
                   child: Row(
                     mainAxisAlignment: _isFull
                         ? MainAxisAlignment.spaceEvenly
