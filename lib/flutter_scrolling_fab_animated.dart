@@ -137,7 +137,7 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated>{
                         ? [
                             Expanded(
                               child: AnimatedOpacity(
-                                opacity: size == 100 ? 1 : 0,
+                                opacity: size > 90 ? 1 : 0,
                                 duration: const Duration(milliseconds: 100),
                                 child: widget.text!,
                               ),
