@@ -62,8 +62,8 @@ class ScrollingFabAnimated extends StatefulWidget {
   _ScrollingFabAnimatedState createState() => _ScrollingFabAnimatedState();
 }
 
-class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated>{
-  /// Double value for tween ending 
+class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated> {
+  /// Double value for tween ending
   double _endTween = 0;
 
   @override
@@ -85,15 +85,15 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated>{
       if (_scrollController.position.pixels > widget.limitIndicator! &&
           _scrollController.position.userScrollDirection ==
               ScrollDirection.reverse) {
-          setState(() {
-            _endTween = 100;
-          });
+        setState(() {
+          _endTween = 100;
+        });
       } else if (_scrollController.position.pixels <= widget.limitIndicator! &&
           _scrollController.position.userScrollDirection ==
               ScrollDirection.forward) {
-          setState(() {
-            _endTween = 0;
-          });
+        setState(() {
+          _endTween = 0;
+        });
       }
     });
   }
@@ -101,56 +101,57 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated>{
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: widget.elevation,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(widget.height! / 2))),
-      child: TweenAnimationBuilder(
-        tween: Tween<double>(begin: 0, end: _endTween), 
-        duration: widget.duration!, 
-        builder: (BuildContext _, double size, Widget? child) {
-          double _widthPercent = (widget.width! - widget.height!).abs() / 100;
-          bool _isFull = _endTween == 100;
-          print((3.6 * math.pi / 180) * size);
-          return Container(
-            height: widget.height,
-            width: widget.height! + _widthPercent * size,
-            child: InkWell(
-              onTap: widget.onPress,
-              child: Ink(
-                decoration: BoxDecoration(
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(widget.height! / 2)),
-                    color: widget.color),
-                child: Row(
-                  mainAxisAlignment: _isFull
-                      ? MainAxisAlignment.spaceEvenly
-                      : MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Transform.rotate(
-                          angle: widget.animateIcon! ? (3.6 * math.pi / 180) * size : 0,
-                          child: widget.icon,
-                        )
-                    ),
-                    ...(_isFull
-                        ? [
-                            Expanded(
-                              child: AnimatedOpacity(
-                                opacity: size > 90 ? 1 : 0,
-                                duration: const Duration(milliseconds: 100),
-                                child: widget.text!,
-                              ),
-                            )
-                          ]
-                        : []),
-                  ],
+        elevation: widget.elevation,
+        shape: RoundedRectangleBorder(
+            borderRadius:
+                BorderRadius.all(Radius.circular(widget.height! / 2))),
+        child: TweenAnimationBuilder(
+          tween: Tween<double>(begin: 0, end: _endTween),
+          duration: widget.duration!,
+          builder: (BuildContext _, double size, Widget? child) {
+            double _widthPercent = (widget.width! - widget.height!).abs() / 100;
+            bool _isFull = _endTween == 100;
+            print((3.6 * math.pi / 180) * size);
+            return Container(
+              height: widget.height,
+              width: widget.height! + _widthPercent * size,
+              child: InkWell(
+                onTap: widget.onPress,
+                child: Ink(
+                  decoration: BoxDecoration(
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(widget.height! / 2)),
+                      color: widget.color),
+                  child: Row(
+                    mainAxisAlignment: _isFull
+                        ? MainAxisAlignment.spaceEvenly
+                        : MainAxisAlignment.center,
+                    children: [
+                      Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Transform.rotate(
+                            angle: widget.animateIcon!
+                                ? (3.6 * math.pi / 180) * size
+                                : 0,
+                            child: widget.icon,
+                          )),
+                      ...(_isFull
+                          ? [
+                              Expanded(
+                                child: AnimatedOpacity(
+                                  opacity: size > 90 ? 1 : 0,
+                                  duration: const Duration(milliseconds: 100),
+                                  child: widget.text!,
+                                ),
+                              )
+                            ]
+                          : []),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        },
-      )
-    );
+            );
+          },
+        ));
   }
 }
