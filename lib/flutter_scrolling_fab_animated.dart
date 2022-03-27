@@ -62,27 +62,12 @@ class ScrollingFabAnimated extends StatefulWidget {
   _ScrollingFabAnimatedState createState() => _ScrollingFabAnimatedState();
 }
 
-class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated>
-    with SingleTickerProviderStateMixin {
-  /// Boolean value to indicate when scroll view is on top
-  bool _onTop = true;
-
-  /// Value to indicate when to show the child widget
-  bool _visibleText = false;
-
-  /// Controller for icon animation
-  late AnimationController _animationController;
+class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated>{
+  /// Double value for tween ending 
+  double _endTween = 0;
 
   @override
   void initState() {
-    _animationController = AnimationController(
-        vsync: this,
-        duration: const Duration(milliseconds: 250),
-        reverseDuration: const Duration(milliseconds: 250),
-        animationBehavior: AnimationBehavior.normal,
-        lowerBound: 0,
-        upperBound: 120);
-
     super.initState();
     _handleScroll();
   }
@@ -90,7 +75,6 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated>
   @override
   void dispose() {
     widget.scrollController!.removeListener(() {});
-    _animationController.dispose();
     super.dispose();
   }
 
@@ -98,21 +82,18 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated>
   void _handleScroll() {
     ScrollController _scrollController = widget.scrollController!;
     _scrollController.addListener(() {
-      print(_scrollController.position.userScrollDirection);
       if (_scrollController.position.pixels > widget.limitIndicator! &&
           _scrollController.position.userScrollDirection ==
               ScrollDirection.reverse) {
-        if (widget.animateIcon!) _animationController.forward();
-        setState(() {
-          _onTop = false;
-        });
+          setState(() {
+            _endTween = 100;
+          });
       } else if (_scrollController.position.pixels <= widget.limitIndicator! &&
           _scrollController.position.userScrollDirection ==
               ScrollDirection.forward) {
-        if (widget.animateIcon!) _animationController.reverse();
-        setState(() {
-          _onTop = true;
-        });
+          setState(() {
+            _endTween = 0;
+          });
       }
     });
   }
@@ -123,61 +104,53 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated>
       elevation: widget.elevation,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(widget.height! / 2))),
-      child: AnimatedContainer(
-        curve: widget.curve ?? Curves.easeInOut,
-        duration: widget.duration!,
-        height: widget.height,
-        width: _onTop ? widget.width : widget.height,
-        onEnd: () {
-          setState(() {
-            _visibleText = !_visibleText;
-          });
-        },
-        decoration: BoxDecoration(
-            borderRadius:
-                BorderRadius.all(Radius.circular(widget.height! / 2))),
-        child: InkWell(
-          borderRadius: BorderRadius.all(Radius.circular(widget.height! / 2)),
-          onTap: widget.onPress,
-          child: Ink(
-            decoration: BoxDecoration(
-                borderRadius:
-                    BorderRadius.all(Radius.circular(widget.height! / 2)),
-                color: widget.color),
-            child: Row(
-              mainAxisAlignment: _onTop
-                  ? MainAxisAlignment.spaceEvenly
-                  : MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: AnimatedBuilder(
-                      child: widget.icon!,
-                      animation: _animationController,
-                      builder: (BuildContext context, Widget? _widget) {
-                        return Transform.rotate(
-                          angle:
-                              (_animationController.value * 3 * math.pi) / 180,
-                          child: _widget!,
-                        );
-                      }),
-                ),
-                ...(_onTop
-                    ? [
-                        Expanded(
-                          child: AnimatedOpacity(
-                            opacity: !_visibleText ? 1 : 0,
-                            duration: const Duration(milliseconds: 100),
-                            child: widget.text!,
-                          ),
+      child: TweenAnimationBuilder(
+        tween: Tween<double>(begin: 0, end: _endTween), 
+        duration: widget.duration!, 
+        builder: (BuildContext _, double size, Widget? child) {
+          double _widthPercent = (widget.width! - widget.height!).abs() / 100;
+          bool _isFull = _endTween == 100;
+          print((3.6 * math.pi / 180) * size);
+          return Container(
+            height: widget.height,
+            width: widget.height! + _widthPercent * size,
+            child: InkWell(
+              onTap: widget.onPress,
+              child: Ink(
+                decoration: BoxDecoration(
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(widget.height! / 2)),
+                    color: widget.color),
+                child: Row(
+                  mainAxisAlignment: _isFull
+                      ? MainAxisAlignment.spaceEvenly
+                      : MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Transform.rotate(
+                          angle: widget.animateIcon! ? (3.6 * math.pi / 180) * size : 0,
+                          child: widget.icon,
                         )
-                      ]
-                    : []),
-              ],
+                    ),
+                    ...(_isFull
+                        ? [
+                            Expanded(
+                              child: AnimatedOpacity(
+                                opacity: size == 100 ? 1 : 0,
+                                duration: const Duration(milliseconds: 100),
+                                child: widget.text!,
+                              ),
+                            )
+                          ]
+                        : []),
+                  ],
+                ),
+              ),
             ),
-          ),
-        ),
-      ),
+          );
+        },
+      )
     );
   }
 }
