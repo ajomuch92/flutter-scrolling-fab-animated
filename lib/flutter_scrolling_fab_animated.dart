@@ -42,6 +42,12 @@ class ScrollingFabAnimated extends StatefulWidget {
   /// Value to indicate if animate or not the icon
   final bool? animateIcon;
 
+  /// Value to inverte the behavior of the animation
+  final bool? inverted;
+
+  /// Double value to set the button radius
+  final double? radius;
+
   const ScrollingFabAnimated(
       {Key? key,
       required this.icon,
@@ -55,7 +61,9 @@ class ScrollingFabAnimated extends StatefulWidget {
       this.curve,
       this.limitIndicator = 10.0,
       this.color,
-      this.animateIcon = true})
+      this.animateIcon = true,
+      this.inverted = false,
+      this.radius})
       : super(key: key);
 
   @override
@@ -64,11 +72,16 @@ class ScrollingFabAnimated extends StatefulWidget {
 
 class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated> {
   /// Double value for tween ending
-  double _endTween = 0;
+  double _endTween = 100;
 
   @override
   void initState() {
     super.initState();
+    if (widget.inverted!) {
+      setState(() {
+        _endTween = 0;
+      });
+    }
     _handleScroll();
   }
 
@@ -86,13 +99,13 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated> {
           _scrollController.position.userScrollDirection ==
               ScrollDirection.reverse) {
         setState(() {
-          _endTween = 100;
+          _endTween = widget.inverted! ? 100 : 0;
         });
       } else if (_scrollController.position.pixels <= widget.limitIndicator! &&
           _scrollController.position.userScrollDirection ==
               ScrollDirection.forward) {
         setState(() {
-          _endTween = 0;
+          _endTween = widget.inverted! ? 0 : 100;
         });
       }
     });
@@ -111,11 +124,11 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated> {
           builder: (BuildContext _, double size, Widget? child) {
             double _widthPercent = (widget.width! - widget.height!).abs() / 100;
             bool _isFull = _endTween == 100;
+            double _radius = widget.radius ?? (widget.height! / 2);
             print((3.6 * math.pi / 180) * size);
             return Container(
               decoration: BoxDecoration(
-                  borderRadius:
-                      BorderRadius.all(Radius.circular(widget.height! / 2)),
+                  borderRadius: BorderRadius.all(Radius.circular(_radius)),
                   color: widget.color ?? Theme.of(context).primaryColor),
               height: widget.height,
               width: widget.height! + _widthPercent * size,
