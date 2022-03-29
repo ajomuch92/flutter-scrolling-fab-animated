@@ -11,8 +11,8 @@ With animated icon
 ## New Features 💥
 * Changing the animation method for a better behavior
 * Fixing bugs
-* Adding inverted prop to inverte the animation behavior
-* Adding inverted prop to set the button radius
+* Adding inverted prop to invert the animation behavior
+* Adding radius prop to set the button radius
 
 ## Instalation
 Include `flutter_scrolling_fab_animated` in your `pubspec.yaml` file:
