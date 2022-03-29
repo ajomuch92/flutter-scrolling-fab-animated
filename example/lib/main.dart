@@ -80,6 +80,7 @@ class _HomeState extends State<Home> {
           onPress: () {},
           scrollController: _scrollController,
           animateIcon: true,
+          inverted: false,
         ));
   }
 }

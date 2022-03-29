@@ -11,6 +11,8 @@ With animated icon
 ## New Features 💥
 * Changing the animation method for a better behavior
 * Fixing bugs
+* Adding inverted prop to inverte the animation behavior
+* Adding inverted prop to set the button radius
 
 ## Instalation
 Include `flutter_scrolling_fab_animated` in your `pubspec.yaml` file:
@@ -57,6 +59,8 @@ import 'package:flutter_scrolling_fab_animated/flutter_scrolling_fab_animated.da
         onPress: (){},
         scrollController: _scrollController,
         animateIcon: true,
+        inverted: false,
+        radius: 10.0,
       )
     );
   }
@@ -98,6 +102,8 @@ import 'package:flutter_scrolling_fab_animated/flutter_scrolling_fab_animated.da
         onPress: (){},
         scrollController: _scrollController,
         animateIcon: true,
+        inverted: false,
+        radius: 10.0,
       )
     );
   }
@@ -122,3 +128,5 @@ import 'package:flutter_scrolling_fab_animated/flutter_scrolling_fab_animated.da
 | limitIndicator  | Double value to set the boundary value when scroll animation is triggered | False   | 10.0 |
 | color  | Color to set the button background color | False   | Colors.blueAccent  |
 | animateIcon | Value to indicate if animate or not the icon | False   | true  |
+| inverted | Value to inverte the behavior of the animation | False   | false |
+| radius | Double value to set the button radius | False   | null |
