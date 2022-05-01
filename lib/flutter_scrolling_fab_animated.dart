@@ -125,7 +125,6 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated> {
             double _widthPercent = (widget.width! - widget.height!).abs() / 100;
             bool _isFull = _endTween == 100;
             double _radius = widget.radius ?? (widget.height! / 2);
-            print((3.6 * math.pi / 180) * size);
             return Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(_radius)),
