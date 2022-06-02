@@ -75,6 +75,11 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated> {
   double _endTween = 100;
 
   @override
+  void setState(VoidCallback fn) {
+    if(mounted) super.setState(fn);
+  }
+  
+  @override
   void initState() {
     super.initState();
     if (widget.inverted!) {
