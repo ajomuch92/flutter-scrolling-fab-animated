@@ -13,3 +13,5 @@
 
 ## [0.1.3] - 4th release (28/03/2022)
 ## [0.1.3+1] - 4th release (28/03/2022)
+
+## [0.1.4] - 4th release (05/06/2022) Fixing mounted bug
