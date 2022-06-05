@@ -76,9 +76,9 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated> {
 
   @override
   void setState(VoidCallback fn) {
-    if(mounted) super.setState(fn);
+    if (mounted) super.setState(fn);
   }
-  
+
   @override
   void initState() {
     super.initState();
