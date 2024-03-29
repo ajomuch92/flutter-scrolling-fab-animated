@@ -135,16 +135,15 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated> {
             bool _isFull = _endTween == 100;
             double _radius = widget.radius ?? (widget.height! / 2);
             return Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(_radius),
-                  color: widget.color ?? Theme.of(context).primaryColor),
               height: widget.height,
               width: widget.height! + _widthPercent * size,
-              child: InkWell(
-                onTap: widget.onPress,
-                onLongPress: widget.onLongPress,
+              child: Material(
                 borderRadius: BorderRadius.circular(_radius),
-                child: Ink(
+                color: widget.color ?? Theme.of(context).primaryColor,
+                child: InkWell(
+                  onTap: widget.onPress,
+                  onLongPress: widget.onLongPress,
+                  borderRadius: BorderRadius.circular(_radius),
                   child: Row(
                     mainAxisAlignment: _isFull
                         ? MainAxisAlignment.spaceEvenly
