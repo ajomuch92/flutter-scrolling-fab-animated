@@ -11,6 +11,7 @@ With animated icon
 ## New Features 💥
 * Adding on long press support
 * Adding ripple effect for the button
+* Removing square shadow around the button when pressing it
 
 ## Instalation
 Include `flutter_scrolling_fab_animated` in your `pubspec.yaml` file:
