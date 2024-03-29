@@ -9,10 +9,8 @@ With animated icon
 <img src="https://raw.githubusercontent.com/ajomuch92/flutter-scrolling-fab-animated/master/assets/demo2.gif" width="200" height="429"/>
 
 ## New Features 💥
-* Changing the animation method for a better behavior
-* Fixing bugs
-* Adding inverted prop to invert the animation behavior
-* Adding radius prop to set the button radius
+* Adding on long press support
+* Adding ripple effect for the button
 
 ## Instalation
 Include `flutter_scrolling_fab_animated` in your `pubspec.yaml` file:
