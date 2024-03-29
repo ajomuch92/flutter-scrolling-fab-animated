@@ -9,6 +9,9 @@ class ScrollingFabAnimated extends StatefulWidget {
   /// Function to use when press the button
   final GestureTapCallback? onPress;
 
+  /// Function to use when long press the button
+  final GestureTapCallback? onLongPress;
+
   /// Double value to set the button elevation
   final double? elevation;
 
@@ -54,6 +57,7 @@ class ScrollingFabAnimated extends StatefulWidget {
       required this.text,
       required this.onPress,
       required this.scrollController,
+      this.onLongPress,
       this.elevation = 5.0,
       this.width = 120.0,
       this.height = 60.0,
@@ -138,6 +142,7 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated> {
               width: widget.height! + _widthPercent * size,
               child: InkWell(
                 onTap: widget.onPress,
+                onLongPress: widget.onLongPress,
                 child: Ink(
                   child: Row(
                     mainAxisAlignment: _isFull
