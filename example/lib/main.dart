@@ -47,7 +47,7 @@ class _HomeState extends State<Home> {
 
   void addItemsToTheList() {
     for (int count = 0; count < 100; count++) {
-      items.add('Person ' + (count + 1).toString());
+      items.add('Person ${count + 1}');
     }
   }
 
@@ -55,29 +55,34 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Flutter Scrolling Fab Animated Demo'),
+          title: const Text('Flutter Scrolling Fab Animated Demo'),
         ),
         body: Container(
-          child: new ListView.builder(
+          child: ListView.builder(
               controller: _scrollController,
               itemCount: items.length,
               itemBuilder: (BuildContext ctxt, int index) {
-                return new Card(
+                return Card(
                     child: ListTile(
                   title: Text(items[index]),
                 ));
               }),
         ),
         floatingActionButton: ScrollingFabAnimated(
-          icon: Icon(
+          icon: const Icon(
             Icons.add,
             color: Colors.white,
           ),
-          text: Text(
+          text: const Text(
             'Add',
             style: TextStyle(color: Colors.white, fontSize: 16.0),
           ),
-          onPress: () {},
+          onPress: () {
+            print('onPress');
+          },
+          onLongPress: () {
+            print('onLongPress');
+          },
           scrollController: _scrollController,
           animateIcon: true,
           inverted: false,
