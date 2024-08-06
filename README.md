@@ -120,6 +120,7 @@ import 'package:flutter_scrolling_fab_animated/flutter_scrolling_fab_animated.da
 | onPress  | Function to use when press the button | True   |  |
 | scrollController  | ScrollController to use to determine when user is on top or not | True   |   |
 | elevation  | Double value to set the button elevation | False   |  5.0 |
+| shadowColor  | Color value to set the button shadow color | False   |  ThemeData.shadowColor |
 | width  | Double value to set the button width when is expanded | False   | 120.0  |
 | height  | Double value to set the button height | False   |  60.0 |
 | duration  | Value to set the duration for animation | False   |  250 milliseconds |
