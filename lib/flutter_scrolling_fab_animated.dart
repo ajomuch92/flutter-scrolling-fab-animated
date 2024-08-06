@@ -34,7 +34,7 @@ class ScrollingFabAnimated extends StatefulWidget {
   final Curve? curve;
 
   /// ScrollController to use to determine when user is on top or not
-  final ScrollController? scrollController;
+  final ScrollController scrollController;
 
   /// Double value to set the boundary value when scroll animation is triggered
   final double? limitIndicator;
@@ -96,22 +96,21 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated> {
 
   @override
   void dispose() {
-    widget.scrollController!.removeListener(() {});
+    widget.scrollController.removeListener(() {});
     super.dispose();
   }
 
   /// Function to add listener for scroll
   void _handleScroll() {
-    ScrollController _scrollController = widget.scrollController!;
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels > widget.limitIndicator! &&
-          _scrollController.position.userScrollDirection ==
+    widget.scrollController.addListener(() {
+      if (widget.scrollController.position.pixels > widget.limitIndicator! &&
+          widget.scrollController.position.userScrollDirection ==
               ScrollDirection.reverse) {
         setState(() {
           _endTween = widget.inverted! ? 100 : 0;
         });
-      } else if (_scrollController.position.pixels <= widget.limitIndicator! &&
-          _scrollController.position.userScrollDirection ==
+      } else if (widget.scrollController.position.pixels <= widget.limitIndicator! &&
+          widget.scrollController.position.userScrollDirection ==
               ScrollDirection.forward) {
         setState(() {
           _endTween = widget.inverted! ? 0 : 100;
