@@ -25,10 +25,10 @@ class ScrollingFabAnimated extends StatefulWidget {
   final Duration? duration;
 
   /// Widget to use as button icon
-  final Widget? icon;
+  final Widget icon;
 
   /// Widget to use as button text when button is expanded
-  final Widget? text;
+  final Widget text;
 
   /// Value to set the curve for animation
   final Curve? curve;
@@ -163,7 +163,7 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated> {
                                 child: AnimatedOpacity(
                                   opacity: size > 90 ? 1 : 0,
                                   duration: const Duration(milliseconds: 100),
-                                  child: widget.text!,
+                                  child: widget.text,
                                 ),
                               )
                             ]
