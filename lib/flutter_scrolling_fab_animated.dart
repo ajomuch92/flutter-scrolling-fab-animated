@@ -15,6 +15,9 @@ class ScrollingFabAnimated extends StatefulWidget {
   /// Double value to set the button elevation
   final double? elevation;
 
+  /// Color value to set the button shadow color
+  final Color? shadowColor;
+
   /// Double value to set the button width
   final double? width;
 
@@ -59,6 +62,7 @@ class ScrollingFabAnimated extends StatefulWidget {
       required this.scrollController,
       this.onLongPress,
       this.elevation = 5.0,
+      this.shadowColor,
       this.width = 120.0,
       this.height = 60.0,
       this.duration = const Duration(milliseconds: 250),
@@ -127,6 +131,7 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated> {
         shape: RoundedRectangleBorder(
             borderRadius:
                 BorderRadius.all(Radius.circular(widget.height! / 2))),
+        shadowColor: widget.shadowColor,
         child: TweenAnimationBuilder(
           tween: Tween<double>(begin: 0, end: _endTween),
           duration: widget.duration!,
