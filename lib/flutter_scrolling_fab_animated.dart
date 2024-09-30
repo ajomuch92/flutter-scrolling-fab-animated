@@ -28,16 +28,16 @@ class ScrollingFabAnimated extends StatefulWidget {
   final Duration? duration;
 
   /// Widget to use as button icon
-  final Widget? icon;
+  final Widget icon;
 
   /// Widget to use as button text when button is expanded
-  final Widget? text;
+  final Widget text;
 
   /// Value to set the curve for animation
   final Curve? curve;
 
   /// ScrollController to use to determine when user is on top or not
-  final ScrollController? scrollController;
+  final ScrollController scrollController;
 
   /// Double value to set the boundary value when scroll animation is triggered
   final double? limitIndicator;
@@ -100,22 +100,21 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated> {
 
   @override
   void dispose() {
-    widget.scrollController!.removeListener(() {});
+    widget.scrollController.removeListener(() {});
     super.dispose();
   }
 
   /// Function to add listener for scroll
   void _handleScroll() {
-    ScrollController _scrollController = widget.scrollController!;
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels > widget.limitIndicator! &&
-          _scrollController.position.userScrollDirection ==
+    widget.scrollController.addListener(() {
+      if (widget.scrollController.position.pixels > widget.limitIndicator! &&
+          widget.scrollController.position.userScrollDirection ==
               ScrollDirection.reverse) {
         setState(() {
           _endTween = widget.inverted! ? 100 : 0;
         });
-      } else if (_scrollController.position.pixels <= widget.limitIndicator! &&
-          _scrollController.position.userScrollDirection ==
+      } else if (widget.scrollController.position.pixels <= widget.limitIndicator! &&
+          widget.scrollController.position.userScrollDirection ==
               ScrollDirection.forward) {
         setState(() {
           _endTween = widget.inverted! ? 0 : 100;
@@ -168,7 +167,7 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated> {
                                 child: AnimatedOpacity(
                                   opacity: size > 90 ? 1 : 0,
                                   duration: const Duration(milliseconds: 100),
-                                  child: widget.text!,
+                                  child: widget.text,
                                 ),
                               )
                             ]
