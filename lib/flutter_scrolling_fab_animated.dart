@@ -45,6 +45,9 @@ class ScrollingFabAnimated extends StatefulWidget {
   /// Color to set the button background color
   final Color? color;
 
+  /// Gradient to set the button background gradient
+  final LinearGradient? gradient;
+
   /// Value to indicate if animate or not the icon
   final bool? animateIcon;
 
@@ -56,22 +59,23 @@ class ScrollingFabAnimated extends StatefulWidget {
 
   const ScrollingFabAnimated(
       {Key? key,
-      required this.icon,
-      required this.text,
-      required this.onPress,
-      required this.scrollController,
-      this.onLongPress,
-      this.elevation = 5.0,
-      this.shadowColor,
-      this.width = 120.0,
-      this.height = 60.0,
-      this.duration = const Duration(milliseconds: 250),
-      this.curve,
-      this.limitIndicator = 10.0,
-      this.color,
-      this.animateIcon = true,
-      this.inverted = false,
-      this.radius})
+        required this.icon,
+        required this.text,
+        required this.onPress,
+        required this.scrollController,
+        this.onLongPress,
+        this.elevation = 5.0,
+        this.shadowColor,
+        this.width = 120.0,
+        this.height = 60.0,
+        this.duration = const Duration(milliseconds: 250),
+        this.curve,
+        this.limitIndicator = 10.0,
+        this.color,
+        this.gradient,
+        this.animateIcon = true,
+        this.inverted = false,
+        this.radius})
       : super(key: key);
 
   @override
@@ -127,9 +131,9 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated> {
   Widget build(BuildContext context) {
     return Card(
         elevation: widget.elevation,
+        color: Colors.transparent,
         shape: RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.all(Radius.circular(widget.height! / 2))),
+            borderRadius: BorderRadius.all(Radius.circular(widget.height! / 2))),
         shadowColor: widget.shadowColor,
         child: TweenAnimationBuilder(
           tween: Tween<double>(begin: 0, end: _endTween),
@@ -138,42 +142,43 @@ class _ScrollingFabAnimatedState extends State<ScrollingFabAnimated> {
             double _widthPercent = (widget.width! - widget.height!).abs() / 100;
             bool _isFull = _endTween == 100;
             double _radius = widget.radius ?? (widget.height! / 2);
+
             return Container(
               height: widget.height,
               width: widget.height! + _widthPercent * size,
-              child: Material(
+
+              decoration: BoxDecoration(
+                gradient:  widget.gradient??const LinearGradient(colors: [Color(0xff0CA2E6),Color(0xff2E3D97),],begin: Alignment.topCenter, end: Alignment.bottomCenter),
+                color:  widget.gradient!=null? null : widget.color ?? Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(_radius),
-                color: widget.color ?? Theme.of(context).primaryColor,
-                child: InkWell(
-                  onTap: widget.onPress,
-                  onLongPress: widget.onLongPress,
-                  borderRadius: BorderRadius.circular(_radius),
-                  child: Row(
-                    mainAxisAlignment: _isFull
-                        ? MainAxisAlignment.spaceEvenly
-                        : MainAxisAlignment.center,
-                    children: [
-                      Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Transform.rotate(
-                            angle: widget.animateIcon!
-                                ? (3.6 * math.pi / 180) * size
-                                : 0,
-                            child: widget.icon,
-                          )),
-                      ...(_isFull
-                          ? [
-                              Expanded(
-                                child: AnimatedOpacity(
-                                  opacity: size > 90 ? 1 : 0,
-                                  duration: const Duration(milliseconds: 100),
-                                  child: widget.text,
-                                ),
-                              )
-                            ]
-                          : []),
-                    ],
-                  ),
+              ),
+              child: InkWell(
+                onTap: widget.onPress,
+                onLongPress: widget.onLongPress,
+                borderRadius: BorderRadius.circular(_radius),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: _isFull
+                      ? MainAxisAlignment.spaceEvenly
+                      : MainAxisAlignment.center,
+                  children: [
+
+                    Transform.rotate(
+                      angle: widget.animateIcon!
+                          ? (3.6 * math.pi / 180) * size
+                          : 0,
+                      child: widget.icon,
+                    ),
+                    if (_isFull)
+                      Flexible(
+                        child:
+                        AnimatedOpacity(
+                          opacity: size > 90 ? 1 : 0,
+                          duration: const Duration(milliseconds: 100),
+                          child: widget.text!,
+                        ),
+                      ),
+                  ],
                 ),
               ),
             );
